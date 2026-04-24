@@ -5,7 +5,6 @@ PyInstaller onefile 빌드 시 _MEIPASS 경로 처리 포함.
 """
 
 import argparse
-import sys
 
 import uvicorn
 from fastapi import FastAPI
