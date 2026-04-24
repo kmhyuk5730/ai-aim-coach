@@ -29,6 +29,14 @@ jobs:
         with:
           workspaces: client/src-tauri
 
+      # tauri-build은 externalBin 파일이 존재해야 빌드 스크립트를 통과함.
+      # CI에서는 PyInstaller 빌드를 생략하고 플레이스홀더로 대체.
+      - name: Create sidecar placeholder for tauri-build
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path binaries | Out-Null
+          [System.IO.File]::WriteAllBytes("binaries\sidecar-x86_64-pc-windows-msvc.exe", @())
+
       - name: cargo clippy
         run: cargo clippy -- -D warnings
 
