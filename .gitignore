@@ -42,3 +42,9 @@ Thumbs.db
 
 # Tauri
 client/src-tauri/WixTools/
+client/src-tauri/binaries/
+client/src-tauri/target/
+
+# Sidecar 빌드 산출물
+sidecar/dist/
+sidecar/build/
