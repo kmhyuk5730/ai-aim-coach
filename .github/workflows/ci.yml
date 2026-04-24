@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  # ──────────────────────────────────────────
+  # 1. Rust — clippy + fmt
+  # ──────────────────────────────────────────
+  rust:
+    name: Rust (clippy + fmt)
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: client/src-tauri
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: client/src-tauri
+
+      - name: cargo clippy
+        run: cargo clippy -- -D warnings
+
+      - name: cargo fmt --check
+        run: cargo fmt --check
+
+  # ──────────────────────────────────────────
+  # 2. TypeScript — typecheck + lint + test
+  # ──────────────────────────────────────────
+  typescript:
+    name: TypeScript (tsc + eslint + vitest)
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: client/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Type check
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test
+
+  # ──────────────────────────────────────────
+  # 3. Python — pytest + ruff + mypy
+  # ──────────────────────────────────────────
+  python:
+    name: Python (pytest + ruff + mypy)
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: sidecar
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: sidecar/requirements-dev.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: pytest
+        run: pytest tests/ -v
+
+      - name: ruff check
+        run: ruff check app/ tests/
+
+      - name: mypy
+        run: mypy app/main.py app/api/health.py --config-file mypy.ini
