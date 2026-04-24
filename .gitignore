@@ -1,0 +1,44 @@
+# 환경 변수
+.env
+.env.local
+.env.*.local
+
+# 의존성
+client/node_modules/
+client/.pnpm-store/
+sidecar/__pycache__/
+sidecar/.venv/
+server/__pycache__/
+server/.venv/
+**/__pycache__/
+**/*.py[cod]
+**/*.pyo
+
+# 빌드 산출물
+client/dist/
+client/src-tauri/target/
+sidecar/dist/
+server/dist/
+
+# 로컬 DB / 임시 캡처
+client/src-tauri/data/*.db
+client/src-tauri/data/*.mp4
+client/src-tauri/data/capture_tmp/
+
+# IDE
+.vscode/settings.json
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Tauri
+client/src-tauri/WixTools/
