@@ -96,7 +96,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.12"
           cache: pip
           cache-dependency-path: sidecar/requirements-dev.txt
 
@@ -110,4 +110,4 @@ jobs:
         run: ruff check app/ tests/
 
       - name: mypy
-        run: mypy app/main.py app/api/health.py --config-file mypy.ini
+        run: mypy app/main.py app/api/health.py app/api/inference.py app/inference/preprocessor.py app/inference/detector.py --config-file mypy.ini

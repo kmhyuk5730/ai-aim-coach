@@ -1,3 +1,7 @@
 fastapi==0.115.12
 uvicorn[standard]==0.34.3
 pyinstaller==6.13.0
+# AI 추론 — DirectML EP (Windows 전용, PyInstaller 번들 +12MB)
+onnxruntime-directml==1.21.0
+numpy==1.26.4
+opencv-python-headless==4.11.0.86
