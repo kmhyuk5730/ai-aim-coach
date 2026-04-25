@@ -4,3 +4,4 @@
 //! - 2차: Windows Graphics Capture (Borderless/Windowed)
 
 pub mod dxgi;
+pub mod wgc;
