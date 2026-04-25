@@ -45,6 +45,8 @@ windows = { version = "0.61", features = [
     "Win32_System_WinRT",
     "Win32_System_WinRT_Graphics_Capture",
     "Win32_System_WinRT_Direct3D11",
+    # 게임 모드 감지 (AC-3)
+    "Win32_UI_WindowsAndMessaging",
 ] }
 
 [dev-dependencies]
