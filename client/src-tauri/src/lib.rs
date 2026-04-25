@@ -1,5 +1,6 @@
 pub mod audit;
 pub mod capture;
+pub mod ffmpeg;
 pub mod input;
 mod sidecar;
 
